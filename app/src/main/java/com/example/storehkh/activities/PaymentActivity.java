@@ -115,7 +115,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
 //         */
 //        try {
 //            JSONObject options = new JSONObject();
-//
+//               //nên coi lại may cái chổ này
 //            options.put("name", "StoreHKH");
 //            options.put("description", "xin chào");
 //            options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.jpg");
