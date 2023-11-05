@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "473587416047",
+    "project_id": "storehkh-6f439",
+    "storage_bucket": "storehkh-6f439.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473587416047:android:bd0dfeb499fb32bfa3541a",
+        "android_client_info": {
+          "package_name": "com.example.storehkh"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsBGMkSbENBUEDm-l-IIGRKUHL2tlZOvw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
