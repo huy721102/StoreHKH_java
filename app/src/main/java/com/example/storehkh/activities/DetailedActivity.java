@@ -50,6 +50,8 @@ public class DetailedActivity extends AppCompatActivity {
     ShowAllModel showAllModel=null;
 
     FirebaseAuth auth;
+
+
     private FirebaseFirestore firestore;
 
     @Override

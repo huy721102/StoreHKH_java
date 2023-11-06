@@ -16,7 +16,8 @@
         android:background="#DDE495"
         android:minHeight="?attr/actionBarSize"
         app:title="Giỏ hàng"
-        android:theme="?attr/actionBarTheme"/>
+        android:theme="?attr/actionBarTheme"
+        />
 
     <TextView
         android:id="@+id/textView"

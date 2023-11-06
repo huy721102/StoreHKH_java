@@ -6,18 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".activities.PaymentActivity">
 
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/payment_toolbar"
-        android:background="#DDE495"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#DDE495"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Chi tiết thanh toán"/>
+        app:title="Chi tiết thanh toán">
 
-
+    </androidx.appcompat.widget.Toolbar>
 
     <ImageView
         android:id="@+id/imageView3"

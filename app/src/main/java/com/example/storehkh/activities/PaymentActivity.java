@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,8 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     Toolbar toolbar;
     TextView subTotal,discount,shipping,total;
     Button paymentBtn;
+    protected boolean shouldClearCartAutomatically = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,9 +140,17 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
 //        }
     }
 
+
+
+
     @Override
     public void onPaymentSuccess(String s) {
         Toast.makeText(this, "Thanh toán thành công!", Toast.LENGTH_SHORT).show();
+
+        // Sử dụng Intent để chuyển sang CartActivity và gọi phương thức clearCart()
+        Intent intent = new Intent(this, CartActivity.class);
+        intent.putExtra("clearCart", true); // Truyền thông báo xóa giỏ hàng
+        startActivity(intent);
     }
 
     @Override

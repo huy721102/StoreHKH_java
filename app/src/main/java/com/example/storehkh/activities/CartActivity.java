@@ -40,16 +40,20 @@ public class CartActivity extends AppCompatActivity {
     MyCartAdapter cartAdapter;
     private FirebaseAuth auth;
     private FirebaseFirestore firestore;
-    Button buynowbtn;
+    Button buynowbtn,Giohang;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
-
+        Intent intent = getIntent();
+        boolean shouldClearCart = intent.getBooleanExtra("clearCart", false);
         auth=FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
-
+        if (shouldClearCart) {
+            clearCart();
+        }
         toolbar =findViewById(R.id.my_cart_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -62,6 +66,12 @@ public class CartActivity extends AppCompatActivity {
                 startActivity(new Intent(CartActivity.this,AddressActivity.class));
             }
         });
+//        Giohang.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(CartActivity.this,));
+//            }
+//        });
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +108,23 @@ public class CartActivity extends AppCompatActivity {
                     }
                 });
     }
+    public void clearCart() {
+        firestore.collection("AddToCart").document(auth.getCurrentUser().getUid())
+                .collection("User").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot doc : task.getResult().getDocuments()) {
+                                doc.getReference().delete(); // Xóa mục khỏi giỏ hàng
+                            }
+                            // Sau khi xóa xong, bạn có thể thực hiện các hành động khác (ví dụ: hiển thị thông báo, chuyển trang, v.v.)
+                        }
+                    }
+                });
+    }
+
+
+
     public BroadcastReceiver mMessageReceiver =new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
