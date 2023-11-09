@@ -1,5 +1,6 @@
 package com.example.storehkh.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -13,10 +14,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.storehkh.R;
+import com.example.storehkh.models.MyCartModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PaymentActivity extends AppCompatActivity implements PaymentResultListener {
     double amount=0.0;
@@ -24,16 +35,41 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     TextView subTotal,discount,shipping,total;
     Button paymentBtn;
     protected boolean shouldClearCartAutomatically = true;
-
+    FirebaseAuth auth;
+    FirebaseFirestore firestore;
+    List<MyCartModel> cartModelList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
         //toolbar
+        auth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
+        cartModelList = new ArrayList<>();
         toolbar=findViewById(R.id.payment_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        String uid = auth.getUid();
+        firestore.collection("AddToCart").document(auth.getCurrentUser().getUid())
+                .collection("User").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
+                        if(task.isSuccessful()) {
+                            for (DocumentSnapshot doc : task.getResult().getDocuments()) {
+
+                                MyCartModel myCartModel = doc.toObject(MyCartModel.class);
+                                cartModelList.add(myCartModel);
+
+                            }
+                            int sumTotal =0;
+                            for (MyCartModel item:cartModelList) {
+                                sumTotal+= item.getTongtien();
+                            }
+                            subTotal.setText(sumTotal+"d");
+                        }
+                    }
+                });
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -68,6 +68,7 @@ public class ShowAllActivity extends AppCompatActivity {
                                 for(DocumentSnapshot doc:task.getResult().getDocuments()){
 
                                     ShowAllModel showAllModel = doc.toObject(ShowAllModel.class);
+                                    showAllModel.setId(doc.getId());
                                     showAllModelList.add(showAllModel);
                                     showAllAdapter.notifyDataSetChanged();
 

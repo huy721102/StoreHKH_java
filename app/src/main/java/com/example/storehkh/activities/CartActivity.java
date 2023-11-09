@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.storehkh.R;
 import com.example.storehkh.adapters.MyCartAdapter;
+import com.example.storehkh.fragments.HomeFragment;
 import com.example.storehkh.models.MyCartModel;
 import com.example.storehkh.models.ShowAllModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,10 +38,11 @@ public class CartActivity extends AppCompatActivity {
     Toolbar toolbar;
     RecyclerView recyclerView;
     List<MyCartModel> cartModelList;
+    public static List<MyCartModel> cartList;
     MyCartAdapter cartAdapter;
     private FirebaseAuth auth;
     private FirebaseFirestore firestore;
-    Button buynowbtn,Giohang;
+    Button buynowbtn,homebtn;
 
 
     @Override
@@ -58,20 +60,25 @@ public class CartActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         buynowbtn=findViewById(R.id.buy_now);
+        homebtn=findViewById(R.id.btn_home);//thêm chổ này
 
         //chuyển trang
         buynowbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CartActivity.this,AddressActivity.class));
+                Intent intent = new Intent(CartActivity.this,AddressActivity.class);
+                startActivity(intent);
             }
         });
-//        Giohang.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(CartActivity.this,));
-//            }
-//        });
+
+        //thêm chổ này nữa
+        homebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(CartActivity.this, MainActivity.class));
+            }
+        });
+
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

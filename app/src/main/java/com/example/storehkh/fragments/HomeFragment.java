@@ -139,6 +139,7 @@ public class HomeFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
                                 CategoryModel categoryModel = document.toObject(CategoryModel.class);
+
                                 categoryModelList.add(categoryModel);
                                 categoryAdapter.notifyDataSetChanged();
                                 linearLayout.setVisibility(View.VISIBLE);
@@ -166,6 +167,7 @@ public class HomeFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
                                 NewProductsModel newProductsModel = document.toObject(NewProductsModel.class);
+                                newProductsModel.setId(document.getId());
                                 newProductsModelList.add(newProductsModel);
                                 newProductsAdapter.notifyDataSetChanged();
 
@@ -191,6 +193,7 @@ public class HomeFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
                                 PopularProductsModel popularProductsModel = document.toObject(PopularProductsModel.class);
+                                popularProductsModel.setId(document.getId());
                                 popularProductsModelList.add(popularProductsModel);
                                 popularProductsAdapter.notifyDataSetChanged();
 

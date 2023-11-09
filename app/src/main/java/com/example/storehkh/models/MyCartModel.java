@@ -1,24 +1,30 @@
 package com.example.storehkh.models;
 
-public class MyCartModel {
+import java.io.Serializable;
+
+public class MyCartModel implements Serializable {
     String Giasanpham;
     String Gio;
     String Ngay;
     String Tensanpham;
     String Tongsoluong;
     int Tongtien;
-
+     String MaSanPham;
+     Integer Type;
     public MyCartModel() {
     }
 
-    public MyCartModel(String giasanpham, String gio, String ngay, String tensanpham, String tongsoluong, int tongtien) {
+    public MyCartModel(String giasanpham, String gio, String ngay, String tensanpham, String tongsoluong, int tongtien, String maSanPham, Integer type) {
         Giasanpham = giasanpham;
         Gio = gio;
         Ngay = ngay;
         Tensanpham = tensanpham;
         Tongsoluong = tongsoluong;
         Tongtien = tongtien;
+        MaSanPham = maSanPham;
+        Type = type;
     }
+
 
     public String getGiasanpham() {
         return Giasanpham;
@@ -66,5 +72,22 @@ public class MyCartModel {
 
     public void setTongtien(int tongtien) {
         Tongtien = tongtien;
+    }
+
+
+    public String getMaSanPham() {
+        return MaSanPham;
+    }
+
+    public void setMaSanPham(String maSanPham) {
+        MaSanPham = maSanPham;
+    }
+
+    public Integer getType() {
+        return Type;
+    }
+
+    public void setType(Integer type) {
+        Type = type;
     }
 }

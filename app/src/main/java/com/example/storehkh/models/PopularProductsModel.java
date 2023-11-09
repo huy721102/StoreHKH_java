@@ -3,6 +3,7 @@ package com.example.storehkh.models;
 import java.io.Serializable;
 
 public class PopularProductsModel implements Serializable {
+    private String id;
     String description;
     int giatien;
     String danhgia;
@@ -12,7 +13,8 @@ public class PopularProductsModel implements Serializable {
     public PopularProductsModel() {
     }
 
-    public PopularProductsModel(String description, int giatien, String danhgia, String name, String img_url) {
+    public PopularProductsModel(String id, String description, int giatien, String danhgia, String name, String img_url) {
+        this.id = id;
         this.description = description;
         this.giatien = giatien;
         this.danhgia = danhgia;
@@ -58,5 +60,13 @@ public class PopularProductsModel implements Serializable {
 
     public void setImg_url(String img_url) {
         this.img_url = img_url;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

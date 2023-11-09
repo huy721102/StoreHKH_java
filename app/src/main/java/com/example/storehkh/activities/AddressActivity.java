@@ -90,7 +90,7 @@ public class AddressActivity extends AppCompatActivity implements AddressAdapter
         paymentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+// khúc này là khúc lấy thông tin tiền về chi tiết thanh toán
                 double amount =0.0;
                 if(obj instanceof NewProductsModel){
                     NewProductsModel newProductsModel=(NewProductsModel) obj;
@@ -101,6 +101,9 @@ public class AddressActivity extends AppCompatActivity implements AddressAdapter
                 } if(obj instanceof ShowAllModel){
                     ShowAllModel showAllModel=(ShowAllModel) obj;
                     amount =showAllModel.getGiatien();
+                } if(obj instanceof NewProductsModel){
+                    NewProductsModel newProductsModel=(NewProductsModel) obj;
+                    amount =newProductsModel.getGiatien();
                 }
                 Intent intent = new Intent(AddressActivity.this,PaymentActivity.class);
                 intent.putExtra("amount",amount);
