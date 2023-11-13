@@ -50,26 +50,43 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         String uid = auth.getUid();
-        firestore.collection("AddToCart").document(auth.getCurrentUser().getUid())
-                .collection("User").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                        if(task.isSuccessful()) {
-                            for (DocumentSnapshot doc : task.getResult().getDocuments()) {
+        Intent intent=getIntent();
+        subTotal=findViewById(R.id.sub_total);
+        discount=findViewById(R.id.textView17);
+        shipping=findViewById(R.id.textView18);
+        total=findViewById(R.id.total_amt);
+        paymentBtn=findViewById(R.id.pay_btn);
+        amount=intent.getDoubleExtra("amount",-1);
+        if (amount != -1){
+            subTotal.setText(amount+"đ");
+        }else {
+            firestore.collection("AddToCart").document(auth.getCurrentUser().getUid())
+                    .collection("User").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                                MyCartModel myCartModel = doc.toObject(MyCartModel.class);
-                                cartModelList.add(myCartModel);
+                            if(task.isSuccessful()) {
+                                for (DocumentSnapshot doc : task.getResult().getDocuments()) {
 
+                                    MyCartModel myCartModel = doc.toObject(MyCartModel.class);
+                                    cartModelList.add(myCartModel);
+
+                                }
+                                int sumTotal =0;
+                                for (MyCartModel item:cartModelList) {
+                                    sumTotal+= item.getTongtien();
+                                }
+                                subTotal.setText(sumTotal+"đ");
                             }
-                            int sumTotal =0;
-                            for (MyCartModel item:cartModelList) {
-                                sumTotal+= item.getTongtien();
-                            }
-                            subTotal.setText(sumTotal+"d");
                         }
-                    }
-                });
+                    });
+        }
+
+
+
+
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,15 +96,6 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
 
         //note lại chổ này coi có cần xoá số 0.0 đó ko
 
-        amount=getIntent().getDoubleExtra("amount",0.0);
-
-        subTotal=findViewById(R.id.sub_total);
-        discount=findViewById(R.id.textView17);
-        shipping=findViewById(R.id.textView18);
-        total=findViewById(R.id.total_amt);
-        paymentBtn=findViewById(R.id.pay_btn);
-
-        subTotal.setText(amount+"đ");
 
         paymentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +128,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
             //multiply with 100 to get exact amount in rupee
             amount = amount * 100;
             //amount
-            options.put("amount", "5000");
+            options.put("amount", "1000");
             JSONObject preFill = new JSONObject();
             //email
             preFill.put("email", "phamhuy721102@gmail.com");
@@ -128,7 +136,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
             preFill.put("lien lac", "0398343658");
 
             options.put("prefill", preFill);
-
+            options.put("currency", "USD");
             checkout.open(activity, options);
         } catch (Exception e) {
             Log.e("TAG", "Error in starting Razorpay Checkout", e);
